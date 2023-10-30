@@ -6,8 +6,7 @@ export default class Home extends Component {
     constructor(props){
         super(props)
         this.state = {
-            dataHome : [],
-            dataVacia : [{id:123213123213,descripcion:'No hay posteos aun!', owner:'MyTrip'}]
+            dataHome : []
         }
     }
     componentDidMount(){
@@ -34,8 +33,7 @@ export default class Home extends Component {
         data = {this.state.dataHome}
         keyExtractor = {item => item.id.toString()}
         renderItem = { ({item}) => <PostHome data = {item.data} id = {item.id} />}
-        />: false}
-        
+        />:<Text>Todavia no cargamos info</Text>}
     </View>
     )
   }

@@ -10,6 +10,7 @@ export default class RegisterForm extends Component {
             username:'',
             password:'',
             minibio:'',
+            error:null,
             logueado: false
         }
     }
@@ -26,8 +27,22 @@ export default class RegisterForm extends Component {
            
         })
         .then(res => this.props.navigation.navigate('Login'))
-        .catch(e=>console.log(e))
-        
+        .catch(e=>{if (e.message == "The email address is badly formatted." ) {
+            this.setState({
+                error: "El mail no tiene el formato correcto"
+            })
+        }
+        if (e.message == 'The password must be 6 characters long or more.') {
+            this.setState({
+                error: "La contraseña debe tener por lo menos 6 caracteres"
+            })
+        }
+        if (e.message == 'The email address is already in use by another account.') {
+            this.setState({
+                error: "El mail ya esta en uso"
+            })
+        }
+    })
     }
   render() {
     return (
@@ -70,6 +85,10 @@ export default class RegisterForm extends Component {
         })}
         value = {this.state.minibio}
         />
+        {this.state.error !== null ? 
+        <View style={styles.errorContainer}>
+        <Text style={styles.errorTexto}>{this.state.error}</Text>
+      </View> : false}
         <TouchableOpacity
         style={styles.button}
         onPress={() => this.onSubmit(this.state.email,this.state.password,this.state.username,this.state.minibio)
@@ -113,6 +132,17 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 16,
+  },
+  errorContainer: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+    margin: 10,
+  },
+  errorTexto: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

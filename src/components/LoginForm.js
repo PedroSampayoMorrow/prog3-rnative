@@ -7,13 +7,18 @@ export default class LoginForm extends Component {
         super(props)
         this.state = {
             email:'',
-            password:''
+            password:'',
+            error:null
         }
     }
     onSubmit(email,password){
         auth.signInWithEmailAndPassword(email,password)
         .then(res => this.props.navigation.navigate('TabNavigation'))
-        .catch(e=>console.log(e))
+        .catch(e=> {if (e.code == "auth/internal-error") {
+            this.setState({
+                error: 'El email o la contraseña son incorrectos'
+            })
+        }})
     }
   render() {
     return (
@@ -38,6 +43,10 @@ export default class LoginForm extends Component {
         })}
         value = {this.state.password}
         />
+         {this.state.error !== null ? 
+        <View style={styles.errorContainer}>
+        <Text style={styles.errorTexto}>{this.state.error}</Text>
+      </View> : false}
         <TouchableOpacity
         style={styles.button}
         onPress={() => {this.onSubmit(this.state.email,this.state.password)
@@ -81,5 +90,16 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 16,
+  },
+  errorContainer: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+    margin: 10,
+  },
+  errorTexto: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });

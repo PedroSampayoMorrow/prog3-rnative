@@ -17,13 +17,13 @@ signOut(){
   render() {
     return (
       <View style ={styles.container}>
-        <Text>MiPerfil</Text>
-        <TouchableOpacity
-        style={styles.button}
-        onPress={() => {this.signOut()
-        }}>
-        <Text style={styles.buttonText}>Sign Out</Text>
-      </TouchableOpacity>
+            <Text>MiPerfil</Text>
+            <TouchableOpacity
+            style={styles.button}
+            onPress={() => {this.signOut()
+            }}>
+            <Text style={styles.buttonText}>Sign Out</Text>
+        </TouchableOpacity>
       </View>
     )
   }

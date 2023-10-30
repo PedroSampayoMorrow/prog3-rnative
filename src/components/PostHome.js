@@ -44,7 +44,7 @@ export default class PostHome extends Component {
         <Text style = {styles.texto}>{this.props.data.descripcion}</Text>
         <Text style = {styles.texto}>{this.props.data.owner}</Text>
         {this.state.likeado ?
-        <TouchableOpacity onPress = {()=>this.sacarLike()}> <FontAwesome name="heart" size={24} color="red" /> </TouchableOpacity> : 
+        <TouchableOpacity onPress = {()=>this.sacarLike()}> <FontAwesome name="heart" size={24} color="red" /> </TouchableOpacity>: 
         <TouchableOpacity onPress = {()=>this.agregarLike()}> <FontAwesome name="heart-o" size={24} color="red" /> </TouchableOpacity> 
         }
         <Text style = {styles.texto}> Cantidad de likes : {this.props.data.likes.length}</Text>
