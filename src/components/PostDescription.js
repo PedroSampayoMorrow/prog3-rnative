@@ -1,11 +1,12 @@
-import { Text, View, StyleSheet,TouchableOpacity, Image } from 'react-native'
+import { Text, View, StyleSheet,TouchableOpacity } from 'react-native'
 import React, { Component } from 'react'
 import { FontAwesome } from '@expo/vector-icons'; 
 
 import firebase from 'firebase';
 import { db, auth } from '../firebase/config';
 
-export default class PostHome extends Component {
+
+export default class PostDescription extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -41,25 +42,13 @@ export default class PostHome extends Component {
   render() {
     return (
       <View style = {styles.container}>
-        <Text style = {styles.texto}>{this.props.data.owner}</Text>
-        <Image 
-        style = {styles.image}
-        source = {{uri: this.props.data.image != undefined ? this.props.data.image : ' '}}
-        resizeMode = 'contain'
-        />
-
         <Text style = {styles.texto}>{this.props.data.descripcion}</Text>
+        <Text style = {styles.texto}>{this.props.data.owner}</Text>
         {this.state.likeado ?
         <TouchableOpacity onPress = {()=>this.sacarLike()}> <FontAwesome name="heart" size={24} color="red" /> </TouchableOpacity>: 
         <TouchableOpacity onPress = {()=>this.agregarLike()}> <FontAwesome name="heart-o" size={24} color="red" /> </TouchableOpacity> 
         }
         <Text style = {styles.texto}> Cantidad de likes : {this.props.data.likes.length}</Text>
-        <TouchableOpacity
-        style={styles.button}
-        onPress={() => {this.props.navigation.navigate('DetailPost',{id : this.props.id})
-        }}>
-            <Text style={styles.buttonText}>Ir a Detalle</Text>
-        </TouchableOpacity>
       </View>
     )
   }
@@ -68,11 +57,6 @@ const styles = StyleSheet.create({
     container: {
         padding: 10,
         backgroundColor: 'lightgray',
-        margin:20,
-        borderRadius:10,
-        flex:1,
-        alignItems: 'center',
-        justifyContent: 'center'
       },
       texto: {
         fontSize: 16,
@@ -90,10 +74,4 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 10,
       },
-      image: {
-        width: 200,
-        height: 200,
-        borderRadius: 10,
-      }
-
 })

@@ -1,26 +1,37 @@
 import { Text, View ,StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import React, { Component } from 'react'
 
-export default class PostForm extends Component {
+export default class CommentForm extends Component {
     constructor(props){
         super(props)
         this.state = {
-            descripcion:' ',
+            descripcion:null,
         }
     }
   render() {
     return (
       <View style = {styles.container}>
-        <Text>Describe Tu Post</Text>
+        <Text>Escribe un comentario!</Text>
         <View>
             <TextInput 
-            placeholder = 'Descripcion'
-            onChangeText = {(text)=>this.props.actualizarDescripcion(text)}
-            value = {this.props.estadoScreenDescripcion}
+            placeholder = 'Comentario'
+            onChangeText = {(text)=>this.setState({
+                descripcion:text
+            })}
+            value = {this.state.descripcion}
             style = {styles.input}
             multiline = {true}
             numberOfLines = {8}
             />
+            <TouchableOpacity
+            style = {styles.button}
+            onPress = {()=>this.state.descripcion ==  null ? alert('No puedes comentar un texto vacio') : this.props.onSubmit({descripcion : this.state.descripcion})}
+            >
+                <Text
+                style = {styles.buttonText}
+                >Enviar!
+                </Text>
+            </TouchableOpacity>
         </View>
       </View>
     )

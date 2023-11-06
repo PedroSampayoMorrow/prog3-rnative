@@ -27,12 +27,12 @@ export default class Home extends Component {
     }
   render() {
     return (
-    <View>
+    <View style = {styles.container}>
         {this.state.dataHome.length !==0 ? <FlatList 
         style = {styles.flatlist}
         data = {this.state.dataHome}
         keyExtractor = {item => item.id.toString()}
-        renderItem = { ({item}) => <PostHome data = {item.data} id = {item.id} />}
+        renderItem = { ({item}) => <PostHome data = {item.data} id = {item.id} navigation = {this.props.navigation}/>}
         />:<Text>Todavia no cargamos info</Text>}
     </View>
     )
@@ -42,5 +42,8 @@ const styles = StyleSheet.create({
     flatlist: {
         flex:1,
         height:100
+    },
+    container: {
+        flex:1,
     }
 })
