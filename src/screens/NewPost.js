@@ -22,7 +22,7 @@ export default class NewPost extends Component {
             image : image,
             likes : [],
             comments : []
-        }).then(res =>this.props.navigation.navigate('Home'))
+        }).then(res =>this.setState({pasoInicial:true},()=>this.props.navigation.navigate('Home')))
         .catch((e)=>console.log(e))
     }
     actualizarDescripcion(descripcionActualizada){

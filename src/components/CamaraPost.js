@@ -50,31 +50,36 @@ export default class CamaraPost extends Component {
     return (
       <View style = {styles.container}>
           {this.state.allow && this.state.showCamera ?
-          <> 
-           <Camera 
-           style = {styles.camera}
-           type = {Camera.Constants.Type.back}
-           ref = {(methods)=>this.methods = methods}
-            />
-            <TouchableOpacity
-            onPress = {()=> this.sacarFoto()}>
-                <Text>Sacar foto</Text>
-            </TouchableOpacity>
+            <> 
+            <View style = {styles.camaraCorregir}>
+                <Camera 
+                style = {styles.camera}
+                type = {Camera.Constants.Type.back}
+                ref = {(methods)=>this.methods = methods}
+                    />
+                    <TouchableOpacity
+                    onPress = {()=> this.sacarFoto()}
+                    style = {styles.button}>
+                        <Text style = {styles.buttonText}>Sacar foto</Text>
+                    </TouchableOpacity>
+            </View>
             </>
             : this.state.allow && this.state.showCamera === false ? 
-                <View>
+                <View style = {styles.camaraCorregir}>
                     <Image
                         source = {{uri:this.state.url}}
                         style = {styles.img}
                         resizeMode = {'contain'}
                     />
                         <TouchableOpacity
-                        onPress = {()=> this.rechazarFoto()}>
-                            <Text>Rechazar Foto </Text>
+                        onPress = {()=> this.rechazarFoto()}
+                        style = {styles.button}>
+                            <Text style = {styles.buttonText}>Rechazar Foto </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                        onPress = {()=> this.acceptarFoto()}>
-                            <Text>Acceptar Foto </Text>
+                        onPress = {()=> this.acceptarFoto()}
+                        style = {styles.button}>
+                            <Text style = {styles.buttonText}>Acceptar Foto </Text>
                         </TouchableOpacity>
                 </View> : <Text>No diste permisos para usar camara</Text>
         }
@@ -87,13 +92,37 @@ export default class CamaraPost extends Component {
 }
 const styles = StyleSheet.create({
     container: {
-        flex:1
+        flex:1,
+        alignContent:'center',
+        justifyContent:'center'
     },
     camera : {
-        height:200,
-        width:200
+        height:'50%',
+        width:300
     },
     img : {
-        height:300
-    }
+        height:'50%',
+        width:300
+    },
+    camaraCorregir : {
+        height:'70%',
+        width: '100%',
+        backgroundColor: 'lightgray',
+        borderRadius:10,
+        padding:10,
+
+    },
+    button: {
+        backgroundColor: 'blue',
+        width:'70%',
+        padding: 10,
+        borderRadius: 5,
+        marginTop:5,
+        alignSelf:'center'
+      },
+    buttonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
+    },
 })

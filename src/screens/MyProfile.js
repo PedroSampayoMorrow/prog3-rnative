@@ -1,13 +1,16 @@
-import { Text, View, TouchableOpacity , StyleSheet } from 'react-native'
+import { Text, View, TouchableOpacity , StyleSheet,Flatlist } from 'react-native'
 import React, { Component } from 'react'
-import { auth } from '../firebase/config'
+import { auth, db } from '../firebase/config'
 
 export default class MyProfile extends Component {
 constructor(props){
     super(props)
     this.state = {
-      usuarios : []
+      posteos : null
     }
+}
+componentDidMount(){
+db.collection('posts')
 }
 
 signOut(){
@@ -18,6 +21,7 @@ signOut(){
     return (
       <View style ={styles.container}>
             <Text>MiPerfil</Text>
+
             <TouchableOpacity
             style={styles.button}
             onPress={() => {this.signOut()
