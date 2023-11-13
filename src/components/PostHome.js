@@ -41,7 +41,11 @@ export default class PostHome extends Component {
   render() {
     return (
       <View style = {styles.container}>
-        <Text style = {styles.texto}>{this.props.data.owner}</Text>
+        <TouchableOpacity
+        onPress={()=>this.props.navigation.navigate('UserProfile',{owner:this.props.data.owner})}
+        >
+          <Text style = {styles.texto}>{this.props.data.owner}</Text>
+        </TouchableOpacity>
         <Image 
         style = {styles.image}
         source = {{uri: this.props.data.image != undefined ? this.props.data.image : ' '}}
