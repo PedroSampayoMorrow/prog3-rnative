@@ -56,12 +56,12 @@ export default class CamaraPost extends Component {
                 style = {styles.camera}
                 type = {Camera.Constants.Type.back}
                 ref = {(methods)=>this.methods = methods}
-                    />
-                    <TouchableOpacity
-                    onPress = {()=> this.sacarFoto()}
-                    style = {styles.button}>
-                        <Text style = {styles.buttonText}>Sacar foto</Text>
-                    </TouchableOpacity>
+                />
+                <TouchableOpacity
+                onPress = {()=> this.sacarFoto()}
+                style = {styles.button}>
+                <Text style = {styles.buttonText}>Sacar foto</Text>
+                </TouchableOpacity>
             </View>
             </>
             : this.state.allow && this.state.showCamera === false ? 

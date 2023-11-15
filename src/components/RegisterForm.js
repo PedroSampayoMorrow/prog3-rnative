@@ -1,6 +1,7 @@
-import { Text, View, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import { auth, db } from '../firebase/config'
+import { Text, View, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { auth, db, storage } from '../firebase/config'
 import React, { Component } from 'react'
+import * as ImagePicker from 'expo-image-picker'
 
 export default class RegisterForm extends Component {
     constructor(props){
@@ -10,18 +11,44 @@ export default class RegisterForm extends Component {
             username:'',
             password:'',
             minibio:'',
+            fotoPerfil:'',
             error:null,
             logueado: false
         }
     }
-    onSubmit(email,password,nombreUsuario,minibio){
+    subirIMG(){
+      ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing:true,
+        aspect:[4,3],
+        quality:1
+      })
+      .then(img => 
+        fetch(img.assets[0].uri)
+        .then(res => res.blob())
+        .then(img =>{
+          const ref = storage.ref(`ProfileImg/${Date.now()}.jpg`)
+          ref.put(img)
+          .then(()=>{
+            ref.getDownloadURL()
+            .then(url =>{
+              this.setState({fotoPerfil: url},()=>console.log(this.state))
+            })
+          })
+        }))
+        
+        
+        
+    }
+    onSubmit(email,password,nombreUsuario,minibio,fotoPerfil){
         auth.createUserWithEmailAndPassword(email,password)
         .then(res => {
             db.collection('usuarios').add({
                 owner: email,
                 createdAt:Date.now(),
                 username: nombreUsuario,
-                minibio:minibio
+                minibio:minibio,
+                fotoPerfil:fotoPerfil
               }).then(res =>  console.log(res))
               .catch((e)=>console.log(e))
            
@@ -34,12 +61,12 @@ export default class RegisterForm extends Component {
         }
         if (e.message == 'The password must be 6 characters long or more.') {
             this.setState({
-                error: "La contraseña debe tener por lo menos 6 caracteres"
+              error: "La contraseña debe tener por lo menos 6 caracteres"
             })
         }
         if (e.message == 'The email address is already in use by another account.') {
             this.setState({
-                error: "El mail ya esta en uso"
+              error: "El mail ya esta en uso"
             })
         }
     })
@@ -48,6 +75,12 @@ export default class RegisterForm extends Component {
     return (
       <View style = {styles.container}>
         <Text>Registrate!</Text>
+              <TouchableOpacity
+              style={styles.img}
+              onPress={()=> this.subirIMG()}>
+                {this.state.fotoPerfil == ``? <Image source={require(`../../assets/FotoPerfilDefault.jpg`)} style={styles.img} resizeMode='contains' />
+                 : <Image source={{uri:this.state.fotoPerfil}} style={styles.img} resizeMode='contains'></Image>}
+              </TouchableOpacity>
         <TextInput
         style = {styles.input}
         keyboardType='email-adress'
@@ -91,7 +124,7 @@ export default class RegisterForm extends Component {
       </View> : false}
         <TouchableOpacity
         style={styles.button}
-        onPress={() => this.onSubmit(this.state.email,this.state.password,this.state.username,this.state.minibio)
+        onPress={() => this.onSubmit(this.state.email,this.state.password,this.state.username,this.state.minibio,this.state.fotoPerfil)
         }>
         <Text style={styles.buttonText}>Enviar</Text>
       </TouchableOpacity>
@@ -144,6 +177,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  img:{
+    height: 100,
+    width: 100,
+    borderRadius: `50%`
+  }
 });
 
 

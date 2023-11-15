@@ -1,18 +1,35 @@
-import { Text, View, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native'
 import React, { Component } from 'react'
-import { auth } from '../firebase/config'
+import { db, auth, } from '../firebase/config'
+import { collection, onSnapshot } from "firebase/firestore";
 import PostProfile from './PostProfile'
 
 export default class MyProfile extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            datos: {}
+        }
+    }
+    componentDidMount(){
+        db.collection(`usuarios`)
+        .where('owner',`==`, auth.currentUser.email)
+        .onSnapshot(
+            data =>{    
+                console.log(data.docs[0].data())
+                this.setState({datos:data.docs[0].data()})
+            }
+        )
     }
     render() {
         return (
             <View style={styles.container}>
-                <View>
-                    <View>
+
+                    <View style={styles.perfil}>
+                        <Image style={styles.img} source={{uri:this.state.datos.fotoPerfil}} resizeMode='contains' />
                         <Text>{auth.currentUser.email}</Text>
+                        <Text>{this.state.datos.username}</Text>
+                        <Text>{this.state.datos.minibio}</Text>
                     </View>
 
                     <TouchableOpacity
@@ -23,7 +40,6 @@ export default class MyProfile extends Component {
                         <Text style={styles.buttonText}>Sign Out</Text>
                     </TouchableOpacity>
 
-                </View>
                 <View style={styles.container}>
                     <FlatList
                         style={styles.flatlist}
@@ -60,4 +76,15 @@ const styles = StyleSheet.create({
     flatlist: {
         flex: 1
     },
+    img:{
+        height:150,
+        width:150,
+        borderRadius: `50%`
+    },
+    perfil:{
+        display:`flex`,
+        flexDirection: `column`,
+        height: `max-content`,
+        paddingTop: 30
+    }
 });
