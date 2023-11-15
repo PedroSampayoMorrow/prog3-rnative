@@ -1,7 +1,6 @@
 import { Text, View, StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native'
 import React, { Component } from 'react'
 import { db, auth, } from '../firebase/config'
-import { collection, onSnapshot } from "firebase/firestore";
 import PostProfile from './PostProfile'
 
 export default class MyProfile extends Component {
