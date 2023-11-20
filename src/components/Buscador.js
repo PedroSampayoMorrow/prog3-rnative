@@ -18,7 +18,7 @@ class buscador extends Component {
 }
 const styles = StyleSheet.create({
     container:{
-        width:"60%",
+        width:"100%",
         display:'flex'
     },
     buscador:{
