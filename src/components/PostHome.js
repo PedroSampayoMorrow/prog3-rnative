@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet,TouchableOpacity, Image } from 'react-native'
+import { Text, View, StyleSheet,TouchableOpacity, Image, FlatList } from 'react-native'
 import React, { Component } from 'react'
 import { FontAwesome } from '@expo/vector-icons'; 
 
@@ -58,6 +58,9 @@ export default class PostHome extends Component {
         <TouchableOpacity onPress = {()=>this.agregarLike()}> <FontAwesome name="heart-o" size={24} color="red" /> </TouchableOpacity> 
         }
         <Text style = {styles.texto}> Cantidad de likes : {this.props.data.likes.length}</Text>
+        {console.log(this.props.comments)}
+        <Text style={styles.texto}>Estos son los ultimos comentarios:</Text>
+        <FlatList data={this.props.comments} keyExtractor={item => item.owner.toString()} renderItem={({item}) =><Text>{item.owner}: {item.descripcion}</Text>}/>
         <TouchableOpacity
         style={styles.button}
         onPress={() => {this.props.navigation.navigate('DetailPost',{id : this.props.id})

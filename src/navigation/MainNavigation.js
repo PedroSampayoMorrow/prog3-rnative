@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 
 import { NavigationContainer, StackActions } from '@react-navigation/native'
@@ -10,6 +9,8 @@ import Register from '../screens/Register'
 import TabNavigation from "./TabNavigation"
 import DetailPost from '../screens/DetailPost'
 import UserProfile from '../screens/UserProfile'
+import EditUser from '../screens/EditUser'
+import MyProfile from '../components/MyProfile'
 const Stack = createNativeStackNavigator()
 
 export default class MainNavigation extends Component {
@@ -22,6 +23,8 @@ export default class MainNavigation extends Component {
             <Stack.Screen name = 'TabNavigation' component = {TabNavigation} options = {{headerShown:false}} />
             <Stack.Screen name = 'DetailPost' component = {DetailPost}  />
             <Stack.Screen name = 'UserProfile' component = {UserProfile}  />
+            <Stack.Screen name = 'EditUser' component = {EditUser}  />
+            <Stack.Screen name = 'MyProfile' component = {MyProfile}  />
           </Stack.Navigator>
       </NavigationContainer>
     )

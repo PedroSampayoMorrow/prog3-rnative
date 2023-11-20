@@ -30,7 +30,7 @@ export default class MyProfile extends Component {
                         <Text>{this.state.datos.username}</Text>
                         <Text>{this.state.datos.minibio}</Text>
                     </View>
-
+                    <TouchableOpacity style={styles.button} onPress={()=> this.props.navigation.navigate("EditUser")}><Text style={styles.buttonText}>Edit</Text></TouchableOpacity>
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => {

@@ -16,7 +16,8 @@ export default class Home extends Component {
                 docs.forEach( doc => {
                     posts.push({
                         id:doc.id,
-                        data:doc.data()
+                        data:doc.data(),
+                        comments:doc.data().comments.slice(0,5)
                     })
                 })
                 this.setState({
@@ -32,7 +33,7 @@ export default class Home extends Component {
         style = {styles.flatlist}
         data = {this.state.dataHome}
         keyExtractor = {item => item.id.toString()}
-        renderItem = { ({item}) => <PostHome data = {item.data} id = {item.id} navigation = {this.props.navigation}/>}
+        renderItem = { ({item}) => <PostHome comments={item.comments} data = {item.data} id = {item.id} navigation = {this.props.navigation}/>}
         />:<Text>Todavia no cargamos info</Text>}
     </View>
     )
