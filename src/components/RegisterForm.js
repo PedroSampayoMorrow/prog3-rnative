@@ -35,10 +35,7 @@ export default class RegisterForm extends Component {
               this.setState({fotoPerfil: url},()=>console.log(this.state))
             })
           })
-        }))
-        
-        
-        
+        }))  
     }
     onSubmit(email,password,nombreUsuario,minibio,fotoPerfil){
         auth.createUserWithEmailAndPassword(email,password)
@@ -79,7 +76,7 @@ export default class RegisterForm extends Component {
               style={styles.img}
               onPress={()=> this.subirIMG()}>
                 {this.state.fotoPerfil == ``? <Image source={require(`../../assets/FotoPerfilDefault.jpg`)} style={styles.img} resizeMode='contains' />
-                 : <Image source={{uri:this.state.fotoPerfil}} style={styles.img} resizeMode='contains'></Image>}
+                 : <Image source={{uri:this.state.fotoPerfil}} style={styles.img} resizeMode='contains'/>}
               </TouchableOpacity>
         <TextInput
         style = {styles.input}
